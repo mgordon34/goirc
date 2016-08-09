@@ -29,7 +29,7 @@ func IRCBot() *Bot {
     reader:   nil,
     commands: nil,
   }
-  bot.ImportJson("commands.json")
+  bot.ImportJson("irc/commands.json")
   return &bot
 }
 
