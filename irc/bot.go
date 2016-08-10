@@ -2,8 +2,10 @@ package irc
 
 import (
   "bufio"
+  "encoding/json"
   "fmt"
   "net"
+  "os"
   // "strings"
 )
 
@@ -18,12 +20,22 @@ type Bot struct {
   commands  map[string]Command
 }
 
-func IRCBot() *Bot {
+func IRCBot(file string) *Bot {
+  configFile, err := os.Open(file)
+  if err != nil {
+    fmt.Println("eror occured")
+  }
+
+  jsonParser := json.NewDecoder(configFile)
+  conf := make(map[string]string)
+  if err = jsonParser.Decode(&conf); err != nil {
+    fmt.Println("error occured parsing")
+  }
   bot := Bot {
     host:     "irc.twitch.tv",
     port:     "6667",
-    nick:     "MightyBoosh18",
-    pass:     "oauth:r981puxzad198oudmbsi7qr0fc0pf0",
+    nick:     conf["nick"],
+    pass:     conf["pass"],
     channel:  "#poujakar18",
     conn:     nil,
     reader:   nil,

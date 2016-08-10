@@ -9,7 +9,7 @@ import (
 
 func main() {
   fmt.Println("Launching irc...")
-  bot := irc.IRCBot()
+  bot := irc.IRCBot("config.json")
   bot.Connect()
 
   for {
