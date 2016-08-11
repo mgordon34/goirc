@@ -17,7 +17,7 @@ type Bot struct {
   channel   string
   conn      net.Conn
   reader    *bufio.Reader
-  commands  map[string]Command
+  commands  []Commandable
 }
 
 func IRCBot(file string) *Bot {
@@ -41,7 +41,8 @@ func IRCBot(file string) *Bot {
     reader:   nil,
     commands: nil,
   }
-  bot.ImportJson("irc/commands.json")
+  // bot.ImportJson("irc/commands.json")
+  bot.InitCommands()
   return &bot
 }
 
